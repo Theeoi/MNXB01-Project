@@ -3,4 +3,4 @@
 
 Wow, how cool!
 
-Authors: Lisa Andersson Loman, Justinas Smertinas, Sara Wildenor, Theodor Blom.
+Authors: *Lisa Andersson Loman, Justinas Smertinas, Sara Wildenor, Theodor Blom.*
