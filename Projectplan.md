@@ -1,6 +1,5 @@
-Decide on 3 tasks
-
 *Mini-Project 1:* **Take me to the moon!**
+
 	Main idea: Try and create a model for guessing whether temperature will be above or below the average given a certain phase of the moon!
 	
 
