@@ -1,5 +1,5 @@
 # MNXB01-Project
-Final project for MNB01 course at Lund Univerisity &lt;3
+**Final project for MNB01 course at Lund Univerisity &lt;3**
 
 Wow, how cool!
 
