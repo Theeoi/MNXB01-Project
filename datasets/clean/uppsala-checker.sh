@@ -29,7 +29,7 @@ sed -e 's, \([^ ]*\) \([^ ]*\) \([^ ]*\),\1-\2-\3 ,' $DATAINPUT > $DATALOC/refor
 
 NUMLINES=$( wc -l $DATAINPUT | awk -F' ' '{print $1}' )
 
-## Our data is in the fourth column
+## Our data is in the fifth column
 DATA=$( cat $DATAINPUT | awk -F' ' '{print $5}' ) 
 
 echo "Checking if all ${NUMLINES} lines of data are numbers."
