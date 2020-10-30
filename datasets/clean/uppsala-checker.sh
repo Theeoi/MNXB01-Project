@@ -19,10 +19,18 @@ for (( i = 1722; i <= 2013; i++ )); do
     fi 
 done
 
+DATANAME=$(basename "$DATAINPUT")
+DATALOC=$(dirname "$DATAINPUT")
+
+## Reformating for data to look more like the other data
+echo "Reformating data date structure and saving as reformat_${DATANAME}"
+sed -e 's, \([^ ]*\) \([^ ]*\) \([^ ]*\),\1-\2-\3 ,' $DATAINPUT > $DATALOC/reformat_$DATANAME
+
+
 NUMLINES=$( wc -l $DATAINPUT | awk -F' ' '{print $1}' )
 
-## Our data is in the fourth column
-DATA=$( cat $DATAINPUT | awk -F' ' '{print $4}' ) 
+## Our data is in the fifth column
+DATA=$( cat $DATAINPUT | awk -F' ' '{print $5}' ) 
 
 echo "Checking if all ${NUMLINES} lines of data are numbers."
 for (( j = 1; j < $NUMLINES; j++ )); do
