@@ -2,7 +2,7 @@
 
 #define MAX_DIGITS 10
 
-int main(int argc, char *argv[])
+int * convert_date(char *argv[])
 {
     int day, month, year;
     day = 10*(argv[1][8]-'0') + (argv[1][9]-'0');
