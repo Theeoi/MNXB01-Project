@@ -19,7 +19,10 @@ class tempTrender {
 
 	private:
         std::string pFilePath;
-	
+	Int_t year;
+    Int_t month;
+    Int_t date;
+    Double_t temp;
 };
 
 #endif
