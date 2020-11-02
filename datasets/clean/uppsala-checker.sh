@@ -23,8 +23,10 @@ DATANAME=$(basename "$DATAINPUT")
 DATALOC=$(dirname "$DATAINPUT")
 
 ## Reformating for data to look more like the other data
-echo "Reformating data date structure and saving as reformat_${DATANAME}"
-sed -e 's, \([^ ]*\) \([^ ]*\) \([^ ]*\),\1-\2-\3 ,' $DATAINPUT > $DATALOC/reformat_$DATANAME
+## ERROR: This part does not function properly.. Maybe we just skip the reformating part.. Space separation is good enough.
+
+## echo "Reformating data date structure and saving as reformat_${DATANAME}"
+## sed -e 's, \([^ ]*\) \([^ ]*\) \([^ ]*\),\1-\2-\3 ,' $DATAINPUT > $DATALOC/reformat_$DATANAME
 
 
 NUMLINES=$( wc -l $DATAINPUT | awk -F' ' '{print $1}' )
