@@ -55,24 +55,45 @@ void tempTrender::tempPerDay() {
     if (!file)
         std::cerr << "tempPerDay could not read file: " << pFilePath << std::endl;
 
-    double fourthTrash;
-    int sixthTrash;
-    char dateSep;
+    // double fourthTrash;
+    // int sixthTrash;
     
     std::vector<int> year, month, day;
     std::vector<double> temp;
     
     while (file) {
-        file >> pYear >> dateSep >> pMonth >> dateSep >> pDay >> fourthTrash >> pTemp >> sixthTrash;
-    
+        file >> pYear >> pMonth >> pDay >> pTemp;
+
         year.push_back(pYear);
         month.push_back(pMonth);
         day.push_back(pDay);
         temp.push_back(pTemp);
+    }
+ 
+    for (long unsigned int i = 0; i < temp.size();) {
+        
+        long unsigned int sIndex = i;    
+        
+        while (true) {
+            if (year[i] != year[i+1])
+                break;
+            else if (month[i] != month[i+1])
+                break;
+            else if (day[i] != day[i+1])
+                break;
+            else
+                i++;
+        }
 
-    } 
-    
-    std::cout << pYear << pMonth << pDay << pTemp;
+        long unsigned int eIndex = i++;
+
+        for (sIndex; sIndex <= eIndex; sIndex++) {
+            
+            std::cout << sIndex << eIndex << std::endl;
+        }
+
+
+    }
 
     // TODO:
     // - Read in the data properly... (Should work for all files!)
@@ -85,7 +106,7 @@ void tempTrender::tempPerDay() {
     
     //for hotcold, Make a histogram of the hottest and coldest day of the year
 
-
+/*
 void tempTrender::hotCold() { 
     std::ifstream file("filePath"); //open input file 
      
@@ -105,7 +126,7 @@ void tempTrender::hotCold() {
     nEntries++;
   
 }
-
+*/
 /*
 
  // from project instructions to get the mean/plot right.
