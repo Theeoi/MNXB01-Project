@@ -60,9 +60,10 @@ void tempTrender::tempPerDay() {
     
     std::vector<int> year, month, day;
     std::vector<double> temp;
+    char comma;
     
     while (file) {
-        file >> pYear >> pMonth >> pDay >> pTemp;
+        file >> pYear >> comma >> pMonth >> comma >> pDay >> comma >> pTemp;
 
         year.push_back(pYear);
         month.push_back(pMonth);
@@ -70,27 +71,32 @@ void tempTrender::tempPerDay() {
         temp.push_back(pTemp);
     }
  
-    for (long unsigned int i = 0; i < temp.size();) {
+    for (long unsigned int i = 0; i < temp.size() - 2;) {
         
         long unsigned int sIndex = i;    
         
         while (true) {
-            if (year[i] != year[i+1])
-                break;
-            else if (month[i] != month[i+1])
-                break;
-            else if (day[i] != day[i+1])
-                break;
-            else
-                i++;
+                if (year[i] != year[i+1])
+                    break;
+                else if (month[i] != month[i+1])
+                    break;
+                else if (day[i] != day[i+1])
+                    break;
+                else
+                    i++;
         }
 
         long unsigned int eIndex = i++;
-
-        for (sIndex; sIndex <= eIndex; sIndex++) {
+        
+        double avgTemp = 0.;
+        for (long unsigned int j = sIndex; j <= eIndex; j++) {
             
-            std::cout << sIndex << eIndex << std::endl;
+            avgTemp += temp[j];
+            
         }
+
+        std::cout << "avgTemp of day " << year[sIndex] << "-" << month[sIndex] << "-" 
+            << day[sIndex] << " is: " << avgTemp/(eIndex - sIndex + 1) << std::endl;
 
 
     }
