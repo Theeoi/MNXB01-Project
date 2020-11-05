@@ -24,3 +24,5 @@ with(lund_data, plot(lund_data$Temp ~ lund_data$Month))
 
 jpeg("moon_temps_dist.jpeg")
 with(lund_data, plot(lund_data$Temp ~ lund_data$Dist))
+
+#Done
