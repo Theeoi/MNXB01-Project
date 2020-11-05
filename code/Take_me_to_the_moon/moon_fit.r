@@ -26,7 +26,7 @@ levels(lund_data$Full) = c("Full", "Not", "Not", "Not", "Not", "Not", "Not", "No
 
 
 #########################################################
-# Making a linear model Temps = Year + Month + Day*Dist #
+# Making a linear model Temps = Year + Month*Day + Dist #
 #########################################################
 full_model = lm(lund_data$Temp ~ lund_data$Year + lund_data$Month2*lund_data$Day + lund_data$Dist)
 summary(full_model)
