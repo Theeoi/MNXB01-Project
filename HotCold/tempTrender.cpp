@@ -76,6 +76,8 @@ void tempTrender::hotCold()
     if (!file)
         std::cerr << "hotCold could not read file: " << pFilePath << std::endl;
 
+    TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);
+	
     std::vector<int> year, month, day;
     std::vector<double> temp, mtemp;
     
