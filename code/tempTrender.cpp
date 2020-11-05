@@ -3,6 +3,11 @@
 #include <vector>
 #include "tempTrender.h" //string is included here already.
 
+#include <TH1.h>
+#include <TF1.h>
+#include <TStyle.h>
+#include <TCanvas.h>
+
 tempTrender::tempTrender(std::string filePath) {
     std::cout << "The user supplied " << filePath << " as the path to the data file." << std::endl;
     tempTrender::setFilePath(filePath);
@@ -70,7 +75,9 @@ void tempTrender::tempPerDay() {
         day.push_back(pDay);
         temp.push_back(pTemp);
     }
- 
+
+    TH1D* hist = new TH1D("hist", "Histogram", temp.size(), 0, temp.size());
+
     for (long unsigned int i = 0; i < temp.size() - 2;) {
         
         long unsigned int sIndex = i;    
@@ -88,16 +95,26 @@ void tempTrender::tempPerDay() {
 
         long unsigned int eIndex = i++;
         
-        double avgTemp = 0.;
         for (long unsigned int j = sIndex; j <= eIndex; j++) {
-            
-            avgTemp += temp[j];
-            
+    
+            hist -> Fill(j, temp[j]);
+
         }
+        
+        hist -> Draw("SAME");
 
-        std::cout << "avgTemp of day " << year[sIndex] << "-" << month[sIndex] << "-" 
-            << day[sIndex] << " is: " << avgTemp/(eIndex - sIndex + 1) << std::endl;
+        char str[temp.size()];
+        sprintf(str,"fit%u",static_cast<unsigned int>(sIndex));
 
+        TF1* fGaus = new TF1(str, "gaus", sIndex, eIndex + 1);
+        fGaus -> SetParameters(10, (eIndex - sIndex + 1)/2, 1);
+        fGaus -> SetParLimits(0, 0, 30);
+        
+        hist -> Fit(fGaus, "QR+");
+        
+        //std::cout << "avgTemp of day " << year[sIndex] << "-" << month[sIndex] << "-" 
+        //    << day[sIndex] << " is: " << fGaus -> GetParameter(0) << std::endl;
+        
 
     }
 
