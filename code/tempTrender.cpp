@@ -7,6 +7,9 @@
 #include <TF1.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <TText.h>
+#include <TCanvas.h>
+#include <TLegend.h>
 
 tempTrender::tempTrender(std::string filePath) {
     std::cout << "The user supplied " << filePath << " as the path to the data file." << std::endl;
@@ -52,17 +55,14 @@ void tempTrender::setTemp(double temp) {
 double tempTrender::getTemp() {
     return pTemp;
 }
-/*
-void tempTrender::tempPerDay() {
+
+void tempTrender::tempPerValborg() {
     
     std::ifstream file(pFilePath);
 
     if (!file)
         std::cerr << "tempPerDay could not read file: " << pFilePath << std::endl;
 
-    // double fourthTrash;
-    // int sixthTrash;
-    
     std::vector<int> year, month, day;
     std::vector<double> temp;
     char comma;
@@ -77,6 +77,9 @@ void tempTrender::tempPerDay() {
     }
 
     TH1D* hist = new TH1D("hist", "Histogram", temp.size(), 0, temp.size());
+
+    const char* canvasName = pFilePath.c_str();
+    TCanvas* c1 = new TCanvas(canvasName, "tempPerValborg", 2500, 900);
 
     for (long unsigned int i = 0; i < temp.size() - 2;) {
         
@@ -108,28 +111,76 @@ void tempTrender::tempPerDay() {
 
         TF1* fGaus = new TF1(str, "gaus", sIndex, eIndex + 1);
         fGaus -> SetParameters(10, (eIndex - sIndex + 1)/2, 1);
-        fGaus -> SetParLimits(0, 0, 30);
+        fGaus -> SetParLimits(0, -5, 35);
         
         hist -> Fit(fGaus, "QR+");
         
-        //std::cout << "avgTemp of day " << year[sIndex] << "-" << month[sIndex] << "-" 
-        //    << day[sIndex] << " is: " << fGaus -> GetParameter(0) << std::endl;
+        std::string yearStr = std::to_string(year[sIndex]);
+        std::string monthStr = std::to_string(month[sIndex]);
+        std::string dayStr = std::to_string(day[sIndex]);
+
+        std::string dateStr = yearStr + "-" + monthStr + "-" + dayStr;
+        const char* dateChar = dateStr.c_str();
+
+        TText* date = new TText((eIndex + sIndex + 1)/2, fGaus -> GetParameter(0), dateChar);
+        date -> SetTextAngle(60);
+        date -> SetTextSize(.01);
+        date -> Draw();
         
+    }
+    
+    hist -> GetXaxis() -> SetTitle("Data Point [Arb. Unit]");
+    hist -> GetYaxis() -> SetTitle("Temperature [C]");
+    hist -> GetXaxis() -> CenterTitle(true);
+    hist -> GetYaxis() -> CenterTitle(true);
+
+    TLegend *leg = new TLegend(0.65, 0.75, 0.92, 0.92, "", "NDC");
+    leg -> SetFillStyle(0);//Transparent fill
+    leg -> SetBorderSize(0);//Get rid of the border
+    leg -> SetTextSize(.05);
+
+    std::string uppStr = "uppsala";
+    std::string lundStr = "lund";
+    if (pFilePath.find(uppStr) != std::string::npos) { //The data is from uppsala
+        
+        TLegend *leg = new TLegend(0.65, 0.80, 0.92, 0.92, "Battle for Valborg! - uppsala", "NDC");
+        leg -> SetFillStyle(0);//Transparent fill
+        leg -> SetBorderSize(0);//Get rid of the border
+        //gStyle -> SetLegendTextSize(.05);
+        leg -> Draw();
+
+        c1 -> Update(); 
+
+        c1 -> SaveAs("./BfV/BfV - uppsala.png");
 
     }
+    else if (pFilePath.find(lundStr) != std::string::npos) { //The data is from Lund
+        
+        TLegend *leg = new TLegend(0.65, 0.80, 0.92, 0.92, "Battle for Valborg! - Lund", "NDC");
+        leg -> SetFillStyle(0);//Transparent fill
+        leg -> SetBorderSize(0);//Get rid of the border
+        //gStyle -> SetLegendTextSize(.05);
+        leg -> Draw();
 
+        c1 -> Update(); 
+
+        c1 -> SaveAs("./BfV/BfV - Lund.png");
+
+    }
+    else
+        std::cout << "The data is neither from uppsala or Lund. No plotting is done.\n"; 
+    
     // TODO:
-    // - Read in the data properly... (Should work for all files!)
-    // - Find all temperatures of each date and fit them to a gaussian (if only one temp -> do not do this)
-    // - Calculate the mean of the gaussian = Mean temp for the day (if only one temp, set to average directly)
-    // - Plot everything nicely.
-
+    // - Make plot look nice!
+    //
+    // BUGS:
+    // - Fitting does not work for negative temperatures. Should add a constant fitting parameter to get this to work.
 
 } // END of tempPerDay()
- */   
+  
     //for hotcold, Make a histogram of the hottest and coldest day of the year
 
-
+/*
 void tempTrender::hotCold() { 
     std::ifstream file("filePath"); //open input file 
 
@@ -151,7 +202,7 @@ void tempTrender::hotCold() {
     
     int n = 0; //counter initialized
     std::string helpString; //help variable?
-     
+    
     while(getline(file, helpString) n++; ) nEntries = n;//to get number of entries in dataset?
      
       //Notes: "pick out" correct data from file
@@ -159,7 +210,7 @@ void tempTrender::hotCold() {
       //How do we get what binnumber this corresponds to?
       //How to do for data from uppsala AND lund data file at the same time? do separately and "draw" in same histogram?
       //Set start year somehow. 
-      
+    
     std::cout << "Year" << year << "Month :" << month << "Date : " << date <<  std::endl;
     nEntries++;
   
@@ -172,6 +223,7 @@ void tempTrender::hotCold() {
       
       histhotCold->Draw();
 
+*/
 /*
  // from project instructions to get the mean/plot right.
 double Gaussian(double* x, double* par) {
