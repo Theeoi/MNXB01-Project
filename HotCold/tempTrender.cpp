@@ -3,6 +3,7 @@
 #include <vector>
 #include "tempTrender.h" 
 #include <bits/stdc++.h>
+#include "TH1.h"
 
 using namespace std;
 
@@ -70,44 +71,84 @@ int tempTrender::getNumDays() {
 
 void tempTrender::hotCold() 
 {
-    
+	
     std::ifstream file(pFilePath);
 
     if (!file)
         std::cerr << "hotCold could not read file: " << pFilePath << std::endl;
 
+	TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);	
+
     std::vector<int> year, month, day;
-    std::vector<double> temp, mtemp;
-    
-    pNumDays = 0;
-    while(file >> pYear >> pMonth >> pDay >> pTemp)
-    {
-		temp.push_back(pTemp);
-		while(pYear == 1722)
+    std::vector<float> temp;
+
+	while(file >> pYear >> pMonth >> pDay >> pTemp)
+	{
+		if(pYear == 1722)
+		
+			temp.push_back(pTemp);
+	}
+	for(long unsigned int i = 0; i < temp.size(); i++)
+	{
+		cout << i << " : " << temp[i] << endl;
+	}
+		cout << temp.size() << endl;
+		
+
+	//cout << temp[pTemp] << endl;
+}
+/*
+
+		year.push_back(pYear);
+		
+		for(long unsigned int i = 0; i <)
+		if(pYear == 1722)
 		{
-			for(pMonth = 0; pMonth < 13; pMonth++)
-			{
-				for(long unsigned int = 0; i < 367; i++)
-				{
-					day.push_back(pNumDays);
-					mtemp.push_back(pTemp);
-					cout << temp[pTemp] << endl;
-				}
-			}
-			
+			temp.push_back(pTemp);
+			cout << temp[pTemp] << endl;
+		}	
+		
+		
+	}
+	for(long unsigned int i = 0; i < temp.size(); i++)
+	{
+		cout << "TEMP: " << temp[i+1] << endl;
+	
+	    year.push_back(pYear);
+		month.push_back(pMonth);
+		day.push_back(pDay);
+		temp.push_back(pTemp);
+    }
+    
+    while(year[pYear] == 1722 && month[pMonth] < 2)
+    {
+		for(long unsigned int i = 0; i < 367; i++)
+		{
+			info.push_back(temp[i]);
+			cout << info[i] << endl;
 		}
 	}
-	//cout << "hello??" << temp[pTemp] << endl;
+}
+	
+
+	for(long unsigned int i = 0; i < temp.size(); i++)
+	{ 
+		cout << temp[i] << "  WHAT " << temp[i+1] << " WHAT " << temp.size() << endl;
+		//give index i to each temperature in temp?
+	}
 	
 }
-/* 
+
+	
+
+  
+ year.push_back(pYear);
+		month.push_back(pMonth);
+		day.push_back(pDay);
+		temp.push_back(pTemp);
  
  for(long unsigned int = 0; i < 367; i++)
 				
-	year.push_back(pYear);
-    month.push_back(pMonth);
-    day.push_back(pDay);
-    temp.push_back(pTemp);
 	
 
     for (long unsigned int i = 0; i < year.size();)
