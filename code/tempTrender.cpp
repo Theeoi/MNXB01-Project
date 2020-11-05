@@ -47,7 +47,7 @@ void tempTrender::setTemp(double temp) {
 double tempTrender::getTemp() {
     return pTemp;
 }
-
+/*
 void tempTrender::tempPerDay() {
     
     std::ifstream file(pFilePath);
@@ -109,32 +109,53 @@ void tempTrender::tempPerDay() {
 
 
 } // END of tempPerDay()
-    
+ */   
     //for hotcold, Make a histogram of the hottest and coldest day of the year
 
-/*
+
 void tempTrender::hotCold() { 
     std::ifstream file("filePath"); //open input file 
-     
-    if( "some statement to be checked for content of file" )
-        std::cout << "Error: the file content did not match the expected" << std::endl;
+
+    if (!file)
+        std::cerr << "hotCold could not read file: " << pFilePath << std::endl;
+    
+    std::vector<int> year, month, day;
+    std::vector<double> temp;
+    
+    while (file) {
+        file >> pYear >> pMonth >> pDay >> pTemp;
+
+        year.push_back(pYear);
+        month.push_back(pMonth);
+        day.push_back(pDay);
+        temp.push_back(pTemp);
+    }
+    
+    
     int n = 0; //counter initialized
-    std::string helpString; //help variable
+    std::string helpString; //help variable?
      
-    while(getline(file, helpString) n++; ) nEntries = n;//to get number of entries in dataset
+    while(getline(file, helpString) n++; ) nEntries = n;//to get number of entries in dataset?
      
       //Notes: "pick out" correct data from file
       //Use for maximum? Int_t binmax = hist->GetMaximumBin(); Double_t x = hist->GetXaxis()->GetBinCenter(binmax) 
       //How do we get what binnumber this corresponds to?
       //How to do for data from uppsala AND lund data file at the same time? do separately and "draw" in same histogram?
       //Set start year somehow. 
+      
     std::cout << "Year" << year << "Month :" << month << "Date : " << date <<  std::endl;
     nEntries++;
   
 }
-*/
-/*
+    TH1D histhotCold = new TH1D("histhotCold", "Histogram", 366, 1, 366); //not sure if I have written this correctly 
+      //??->??("histhotCold", "x", "y"); //read in data and set the right parameters?
+      histhotCold->Fill();
+      histhotCold->GetMean();//or use the more fancy way below
+      histhotCold->GetStdDev();
+      
+      histhotCold->Draw();
 
+/*
  // from project instructions to get the mean/plot right.
 double Gaussian(double* x, double* par) {
     return par[0]*exp(-0.5*(x[0]*[0] - 2*x[0]*par[1] + par[1]*par[1]/(par[2]*par[2]));
@@ -142,7 +163,7 @@ double Gaussian(double* x, double* par) {
 
 TF1* func= new TF1("Gaussian", Gaussian, 1, 366, 3);
 func->SetParameters(5, 200, 50); //Starting values for fitting
-hist->Fit(func, "Q0R");
+histhotCold->Fit(func, "Q0R");
 
 cout << "The mean is " << func->GetParameter(1) << endl;
 cout << "Its uncertainty is " << func->GetParError(1) << endl;
@@ -153,11 +174,11 @@ leg->SetBorderSize(0);//Get rid of the border
 leg->AddEntry(hist, "", "F"); //Use object title draw fill
 leg->AddEntry(anotherHist, "A title", "F"); //Use custom title
 
-hist->Draw();
+histhotCold->Draw();
 anotherHist->Draw("SAME"); //To get it in the same plot
 leg->Draw(); //Legends dont need "SAME" to be drawn in same plot
 
-*/ 
+*/
 
 
 
