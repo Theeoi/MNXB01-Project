@@ -52,6 +52,14 @@ void tempTrender::setTemp(double temp) {
 double tempTrender::getTemp() {
     return pTemp;
 }
+
+void tempTrender::setfirstYear(int firstYear) {
+    pfirstYear = firstYear;
+}
+
+int tempTrender::getfirstYear() {
+    return pfirstYear;
+}
 /*
 void tempTrender::tempPerDay() {
     
@@ -131,7 +139,7 @@ void tempTrender::tempPerDay() {
 
 
 void tempTrender::hotCold() { 
-    std::ifstream file("filePath"); //open input file 
+    std::ifstream file(pFilePath); //open input file 
 
     if (!file)
         std::cerr << "hotCold could not read file: " << pFilePath << std::endl;
@@ -139,40 +147,35 @@ void tempTrender::hotCold() {
     std::vector<int> year, month, day;
     std::vector<double> temp;
     
-    while (file) {
-        file >> pYear >> pMonth >> pDay >> pTemp;
+    TH1D* histHot = new TH1D("histHot", "Histogram", 366, 1, 366); 
+    TH1D* histCold = new TH1D("histCold", "Histogram", 366, 1, 366); 
 
-        year.push_back(pYear);
-        month.push_back(pMonth);
-        day.push_back(pDay);
-        temp.push_back(pTemp);
-    }
-    
-    
-    int n = 0; //counter initialized
-    std::string helpString; //help variable?
+    pfirstYear = 1722;
+    while (file >> pYear >> pMonth >> pDay >> pTemp) {
+       
+       if (pYear == pfirstYear) {
+         temp.push_back(pTemp);
+         histHot->Fill(*max_element(temp.begin(),temp.end()));
+         histCold->Fill(*min_element(temp.begin(),temp.end()));
+        }
+       else
+         pfirstYear += 1;
+	}
+    //cout << temp[] << endl;
      
-    while(getline(file, helpString) n++; ) nEntries = n;//to get number of entries in dataset?
-     
-      //Notes: "pick out" correct data from file
-      //Use for maximum? Int_t binmax = hist->GetMaximumBin(); Double_t x = hist->GetXaxis()->GetBinCenter(binmax) 
-      //How do we get what binnumber this corresponds to?
-      //How to do for data from uppsala AND lund data file at the same time? do separately and "draw" in same histogram?
-      //Set start year somehow. 
-      
-    std::cout << "Year" << year << "Month :" << month << "Date : " << date <<  std::endl;
-    nEntries++;
   
-}
-    TH1D histhotCold = new TH1D("histhotCold", "Histogram", 366, 1, 366); //not sure if I have written this correctly 
+      histHot->Draw();
+      histCold->Draw("same");
+ }     
+     /* 
       //??->??("histhotCold", "x", "y"); //read in data and set the right parameters?
       histhotCold->Fill();
       histhotCold->GetMean();//or use the more fancy way below
       histhotCold->GetStdDev();
       
-      histhotCold->Draw();
+      
 
-/*
+
  // from project instructions to get the mean/plot right.
 double Gaussian(double* x, double* par) {
     return par[0]*exp(-0.5*(x[0]*[0] - 2*x[0]*par[1] + par[1]*par[1]/(par[2]*par[2]));
