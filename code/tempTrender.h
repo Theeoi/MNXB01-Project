@@ -2,6 +2,11 @@
 #define TEMPTRENDER_H
 
 #include <string>
+#include <TMath.h>
+
+//double Gaussian(double* x, double* par) {
+//    return par[0]*exp(-0.5*(x[0]*[0] - 2*x[0]*par[1] + par[1]*par[1]/(par[2]*par[2])));
+//}
 
 class tempTrender {
 	public:
