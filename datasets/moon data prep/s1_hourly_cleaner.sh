@@ -4,7 +4,7 @@
 # This script will be called from master_script.sh #
 ####################################################
 
-# This script is meant to take the original Lund SMHI datafile and return rows with specific string in them.
+# This script is meant to take the cleaned Lund SMHI datafile and return rows with specific string in them.
 # e.g. if we want temperatures at 18:00 for each day, we can find them.
 
 # Input data path
