@@ -97,8 +97,6 @@ void tempTrender::hotCold()
 			
 		}
 	}
-	//cout << "hello??" << temp[pTemp] << endl;
-	
 }
 /* 
  
@@ -137,6 +135,7 @@ void tempTrender::hotCold()
 					std::cout << temp[i] << std::endl;
 				}
 				//Cant really get any loop to work... 
+				I know im doing this way wrong and more complicated than it needs to be
 			}
 		}
     }
