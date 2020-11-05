@@ -77,7 +77,10 @@ void tempTrender::hotCold()
     if (!file)
         std::cerr << "hotCold could not read file: " << pFilePath << std::endl;
 
+
 	TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);	
+    TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);
+	
 
     std::vector<int> year, month, day;
     std::vector<float> temp;
@@ -128,6 +131,7 @@ void tempTrender::hotCold()
 			cout << info[i] << endl;
 		}
 	}
+<<<<<<< HEAD
 }
 	
 
@@ -137,6 +141,8 @@ void tempTrender::hotCold()
 		//give index i to each temperature in temp?
 	}
 	
+=======
+>>>>>>> 0aea0f2aabc16aac02c720a32cfce876120e1ec7
 }
 
 	
@@ -178,6 +184,7 @@ void tempTrender::hotCold()
 					std::cout << temp[i] << std::endl;
 				}
 				//Cant really get any loop to work... 
+				I know im doing this way wrong and more complicated than it needs to be
 			}
 		}
     }
