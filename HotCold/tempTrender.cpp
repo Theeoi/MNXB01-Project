@@ -126,35 +126,6 @@ Need to add some kind of loop for the years aswell.
 	{
 		cout << "TEMP: " << temp[i+1] << endl;
 	
-	    year.push_back(pYear);
-		month.push_back(pMonth);
-		day.push_back(pDay);
-		temp.push_back(pTemp);
-    }
-    
-    while(year[pYear] == 1722 && month[pMonth] < 2)
-    {
-		for(long unsigned int i = 0; i < 367; i++)
-		{
-			info.push_back(temp[i]);
-			cout << info[i] << endl;
-		}
-	}
-<<<<<<< HEAD
-}
-	
-
-	for(long unsigned int i = 0; i < temp.size(); i++)
-	{ 
-		cout << temp[i] << "  WHAT " << temp[i+1] << " WHAT " << temp.size() << endl;
-		//give index i to each temperature in temp?
-	}
-	
-=======
->>>>>>> 0aea0f2aabc16aac02c720a32cfce876120e1ec7
-}
-
-	
 
   
  year.push_back(pYear);
