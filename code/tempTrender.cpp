@@ -65,16 +65,19 @@ int tempTrender::getfirstYear() {
 }
 
 void tempTrender::tempPerValborg() { // START of tempPerValborg()
- 
+    
+    // Open file and ensure that it is open. 
     std::ifstream file(pFilePath);
 
     if (!file)
         std::cerr << "tempPerValborg could not read file: " << pFilePath << std::endl;
-
+    
+    // Initiate vectors for storing the data.
     std::vector<int> year, month, day;
     std::vector<double> temp;
     char comma;
     
+    // Read each line and push_back the value into the vectors.
     while (file) {
         file >> pYear >> comma >> pMonth >> comma >> pDay >> comma >> pTemp;
 
@@ -84,18 +87,22 @@ void tempTrender::tempPerValborg() { // START of tempPerValborg()
         temp.push_back(pTemp);
     }
 
+    // Close the file as the values are now stored in vectors.
     file.close();
 
+    // Initiate histogram for plotting the data.
     TH1D* hist = new TH1D("hist", "Histogram", temp.size(), 0, temp.size());
 
-    const char* canvasName = pFilePath.c_str();
+    // Create Canvas for histogram
+    const char* canvasName = pFilePath.c_str(); // Canvas has a name relating it to the data.
     TCanvas* c1 = new TCanvas(canvasName, "tempPerValborg", 2500, 900);
 
+    // Check for temperatures on the same day.
     for (long unsigned int i = 0; i < temp.size() - 2;) {
         
-        long unsigned int sIndex = i;    
+        long unsigned int sIndex = i; // Save the starting index. 
         
-        while (true) {
+        while (true) { // Check if the next value is on the same day as sIndex.
                 if (year[i] != year[i+1])
                     break;
                 else if (month[i] != month[i+1])
@@ -103,28 +110,30 @@ void tempTrender::tempPerValborg() { // START of tempPerValborg()
                 else if (day[i] != day[i+1])
                     break;
                 else
-                    i++;
-        }
+                    i++; // If it is, increment to next line. 
+        } // Repeat until next day.
 
-        long unsigned int eIndex = i++;
+        long unsigned int eIndex = i++; // Save index of the last line which is the same as sIndex.
         
         for (long unsigned int j = sIndex; j <= eIndex; j++) {
     
-            hist -> Fill(j, temp[j]);
+            hist -> Fill(j, temp[j]); // Fill the histogram with the values for that day.
 
         }
         
         hist -> Draw("SAME");
 
+        // Create gaussian function for fitting.
         char str[temp.size()];
-        sprintf(str,"fit%u",static_cast<unsigned int>(sIndex));
+        sprintf(str,"fit%u",static_cast<unsigned int>(sIndex)); // The fit for each day must have a different name.
 
         TF1* fGaus = new TF1(str, "gaus", sIndex, eIndex + 1);
-        fGaus -> SetParameters(10, (eIndex - sIndex + 1)/2, 1);
-        fGaus -> SetParLimits(0, -5, 35);
+        fGaus -> SetParameters(10, (eIndex - sIndex + 1)/2, 1); // Start with fit parameters: Amplitude, Center, FWHM.
+        fGaus -> SetParLimits(0, -5, 35); // The temperature should be within -5 to 35 degrees.
         
-        hist -> Fit(fGaus, "QR+");
+        hist -> Fit(fGaus, "QR+"); // Fit and add fit to histogram.
         
+        // Indicate which date the fit/histogram data is from.
         std::string yearStr = std::to_string(year[sIndex]);
         std::string monthStr = std::to_string(month[sIndex]);
         std::string dayStr = std::to_string(day[sIndex]);
@@ -132,6 +141,7 @@ void tempTrender::tempPerValborg() { // START of tempPerValborg()
         std::string dateStr = yearStr + "-" + monthStr + "-" + dayStr;
         const char* dateChar = dateStr.c_str();
 
+        // Draw the date by the fit peak.
         TText* date = new TText((eIndex + sIndex + 1)/2, fGaus -> GetParameter(0), dateChar);
         date -> SetTextAngle(60);
         date -> SetTextSize(.02);
@@ -139,16 +149,19 @@ void tempTrender::tempPerValborg() { // START of tempPerValborg()
         
     }
     
+    // Adding labels to the axis
     hist -> GetXaxis() -> SetTitle("Data Point [Arb. Unit]");
     hist -> GetYaxis() -> SetTitle("Temperature [C]");
     hist -> GetXaxis() -> CenterTitle(true);
     hist -> GetYaxis() -> CenterTitle(true);
 
+    // Adding a legend
     TLegend *leg = new TLegend(0.65, 0.75, 0.92, 0.92, "", "NDC");
     leg -> SetFillStyle(0);//Transparent fill
     leg -> SetBorderSize(0);//Get rid of the border
     leg -> SetTextSize(.05);
 
+    // Depending on the data input we want to plot different things.
     std::string uppStr = "uppsala";
     std::string lundStr = "lund";
     if (pFilePath.find(uppStr) != std::string::npos) { //The data is from uppsala

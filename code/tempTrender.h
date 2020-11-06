@@ -39,11 +39,11 @@ class tempTrender {
 
 	private:
         std::string pFilePath;
-	    int pYear;
+	    int pYear; // Temporary variable for storing the year of each data line.
 	    int pfirstYear;
-        int pMonth;
-        int pDay;
-        double pTemp;
+        int pMonth; // Temporary variable for storing the month of each data line.
+        int pDay; // Temporary variable for storing the day of each data line.
+        double pTemp; // Temporary variable for storing the temperature of each data line.
 };
 
 #endif
