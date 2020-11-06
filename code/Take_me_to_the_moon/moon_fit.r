@@ -1,5 +1,7 @@
 
 dir = getwd()
+dir = paste(dir, "/code/Take_me_to_the_moon/", sep = "")
+dir
 setwd(dir)
 
 ###########################
