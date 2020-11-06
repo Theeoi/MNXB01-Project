@@ -88,19 +88,28 @@ void tempTrender::hotCold()
 	while(file >> pYear >> pMonth >> pDay >> pTemp)
 	{
 		if(pYear == 1722)
-		
+		{
 			temp.push_back(pTemp);
+		}
 	}
 	for(long unsigned int i = 0; i < temp.size(); i++)
 	{
 		cout << i << " : " << temp[i] << endl;
 	}
 		cout << temp.size() << endl;
-		
 
-	//cout << temp[pTemp] << endl;
-}
+	cout << temp.size() << endl;
+	pIndMax = max_element(temp.begin(), temp.end()) - temp.begin(); //creating index for max value 
+	pIndMin = min_element(temp.begin(), temp.end()) - temp.begin(); ////creating index for min value 
+	pMax = *max_element(temp.begin(), temp.end()); //finding max
+	pMin = *min_element(temp.begin(), temp.end()); //finding min
+	cout << "max: " << pMax << " index: " << pIndMax << endl;
+	cout << "min: " << pMin << " index: " << pIndMin << endl;
+}	
 /*
+This loop is storing the max and min values of the vector 'temp' stored with temperature values for one year, the first one.
+Need to add some kind of loop for the years aswell.
+
 
 		year.push_back(pYear);
 		
