@@ -3,6 +3,7 @@
 #include <vector>
 #include "tempTrender.h" 
 #include <bits/stdc++.h>
+#include "TH1.h"
 
 using namespace std;
 
@@ -70,44 +71,70 @@ int tempTrender::getNumDays() {
 
 void tempTrender::hotCold() 
 {
-    
+	
     std::ifstream file(pFilePath);
 
     if (!file)
         std::cerr << "hotCold could not read file: " << pFilePath << std::endl;
 
+
+	TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);	
     TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);
 	
+
     std::vector<int> year, month, day;
-    std::vector<double> temp, mtemp;
-    
-    pNumDays = 0;
-    while(file >> pYear >> pMonth >> pDay >> pTemp)
-    {
-		temp.push_back(pTemp);
-		while(pYear == 1722)
+    std::vector<float> temp;
+
+	while(file >> pYear >> pMonth >> pDay >> pTemp)
+	{
+		if(pYear == 1722)
 		{
-			for(pMonth = 0; pMonth < 13; pMonth++)
-			{
-				for(long unsigned int = 0; i < 367; i++)
-				{
-					day.push_back(pNumDays);
-					mtemp.push_back(pTemp);
-					cout << temp[pTemp] << endl;
-				}
-			}
-			
+			temp.push_back(pTemp);
 		}
 	}
-}
-/* 
+	for(long unsigned int i = 0; i < temp.size(); i++)
+	{
+		cout << i << " : " << temp[i] << endl;
+	}
+		cout << temp.size() << endl;
+
+	cout << temp.size() << endl;
+	pIndMax = max_element(temp.begin(), temp.end()) - temp.begin(); //creating index for max value 
+	pIndMin = min_element(temp.begin(), temp.end()) - temp.begin(); ////creating index for min value 
+	pMax = *max_element(temp.begin(), temp.end()); //finding max
+	pMin = *min_element(temp.begin(), temp.end()); //finding min
+	cout << "max: " << pMax << " index: " << pIndMax << endl;
+	cout << "min: " << pMin << " index: " << pIndMin << endl;
+}	
+/*
+This loop is storing the max and min values of the vector 'temp' stored with temperature values for one year, the first one.
+Need to add some kind of loop for the years aswell.
+
+
+		year.push_back(pYear);
+		
+		for(long unsigned int i = 0; i <)
+		if(pYear == 1722)
+		{
+			temp.push_back(pTemp);
+			cout << temp[pTemp] << endl;
+		}	
+		
+		
+	}
+	for(long unsigned int i = 0; i < temp.size(); i++)
+	{
+		cout << "TEMP: " << temp[i+1] << endl;
+	
+
+  
+ year.push_back(pYear);
+		month.push_back(pMonth);
+		day.push_back(pDay);
+		temp.push_back(pTemp);
  
  for(long unsigned int = 0; i < 367; i++)
 				
-	year.push_back(pYear);
-    month.push_back(pMonth);
-    day.push_back(pDay);
-    temp.push_back(pTemp);
 	
 
     for (long unsigned int i = 0; i < year.size();)

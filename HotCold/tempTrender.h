@@ -28,6 +28,7 @@ class tempTrender {
         
         void setNumDays(int);
         int getNumDays();
+        
 
 	    //void tempOnDay(int monthToCalculate, int dayToCalculate); //Make a histogram of the temperature on this day
 	    //void tempOnDay(int dateToCalculate); //Make a histogram of the temperature on this date
@@ -43,6 +44,7 @@ class tempTrender {
         double pTemp;
         int pCountYear;
         int pNumDays;
+        
         
         
 };
