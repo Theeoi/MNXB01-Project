@@ -9,7 +9,7 @@ Authors: *Lisa Andersson Loman, Justinas Smertinas, Sara Wildenor, Theodor Blom.
 
 *Battle for Valborg:*
 
-    - Launch ROOT from inside the ./code/ directory.
+    - Launch ROOT (version 6.22) from inside the ./code/ directory.
     - >root [0] project()
     
 *Take me to the moon:*
