@@ -56,9 +56,6 @@ double tempTrender::getTemp() {
     return pTemp;
 }
 
-
-void tempTrender::tempPerValborg() {
-=======
 void tempTrender::setfirstYear(int firstYear) {
     pfirstYear = firstYear;
 }
@@ -66,14 +63,13 @@ void tempTrender::setfirstYear(int firstYear) {
 int tempTrender::getfirstYear() {
     return pfirstYear;
 }
-/*
-void tempTrender::tempPerDay() {
 
-    
+void tempTrender::tempPerValborg() { // START of tempPerValborg()
+ 
     std::ifstream file(pFilePath);
 
     if (!file)
-        std::cerr << "tempPerDay could not read file: " << pFilePath << std::endl;
+        std::cerr << "tempPerValborg could not read file: " << pFilePath << std::endl;
 
     std::vector<int> year, month, day;
     std::vector<double> temp;
@@ -87,6 +83,8 @@ void tempTrender::tempPerDay() {
         day.push_back(pDay);
         temp.push_back(pTemp);
     }
+
+    file.close();
 
     TH1D* hist = new TH1D("hist", "Histogram", temp.size(), 0, temp.size());
 
@@ -136,7 +134,7 @@ void tempTrender::tempPerDay() {
 
         TText* date = new TText((eIndex + sIndex + 1)/2, fGaus -> GetParameter(0), dateChar);
         date -> SetTextAngle(60);
-        date -> SetTextSize(.01);
+        date -> SetTextSize(.02);
         date -> Draw();
         
     }
@@ -162,8 +160,18 @@ void tempTrender::tempPerDay() {
         leg -> Draw();
 
         c1 -> Update(); 
+        c1 -> SaveAs("./BfV/BfV-uppsala.png");
 
-        c1 -> SaveAs("./BfV/BfV - uppsala.png");
+        hist -> GetXaxis() -> SetRangeUser(224,276);
+
+        c1 -> Update();
+        c1 -> SaveAs("./BfV/uppsala-LundRange.png");
+
+        hist -> GetXaxis() -> SetRangeUser(195,200);
+
+        c1 -> SetCanvasSize(1200,900);
+        c1 -> Update();
+        c1 -> SaveAs("./BfV/uppsala-Coldest.png");
 
     }
     else if (pFilePath.find(lundStr) != std::string::npos) { //The data is from Lund
@@ -176,7 +184,7 @@ void tempTrender::tempPerDay() {
 
         c1 -> Update(); 
 
-        c1 -> SaveAs("./BfV/BfV - Lund.png");
+        c1 -> SaveAs("./BfV/BfV-Lund.png");
 
     }
     else
@@ -188,7 +196,7 @@ void tempTrender::tempPerDay() {
     // BUGS:
     // - Fitting does not work for negative temperatures. Should add a constant fitting parameter to get this to work.
 
-} // END of tempPerDay()
+} // END of tempPerValborg()
   
     //for hotcold, Make a histogram of the hottest and coldest day of the year
 
@@ -225,7 +233,7 @@ void tempTrender::hotCold() {
     
     std::cout << "Year" << year << "Month :" << month << "Date : " << date <<  std::endl;
     nEntries++;
-=======
+    
     TH1D* histHot = new TH1D("histHot", "Histogram", 366, 1, 366); 
     TH1D* histCold = new TH1D("histCold", "Histogram", 366, 1, 366); 
 
@@ -244,8 +252,7 @@ void tempTrender::hotCold() {
        
       histHot->Draw();
       histCold->Draw("same");
- }     
-     /* 
+ }      
       //??->??("histhotCold", "x", "y"); //read in data and set the right parameters?
       histhotCold->Fill();
       histhotCold->GetMean();//or use the more fancy way below
@@ -255,7 +262,6 @@ void tempTrender::hotCold() {
 
 */
 /*
-=======
 
  // from project instructions to get the mean/plot right.
 double Gaussian(double* x, double* par) {
