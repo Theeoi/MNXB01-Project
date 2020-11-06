@@ -34,18 +34,16 @@ class tempTrender {
 	    //void tempOnDay(int monthToCalculate, int dayToCalculate); //Make a histogram of the temperature on this day
 	    //void tempOnDay(int dateToCalculate); //Make a histogram of the temperature on this date
 	    void tempPerValborg(); //Make a histogram of the average temperature of each day of the year
-=======
-	    //void tempPerDay(); //Make a histogram of the average temperature of each day of the year
 	    void hotCold(); //Make a histogram of the hottest and coldest day of the year
 	    //void tempPerYear(int yearToExtrapolate); //Make a histogram of average temperature per year, then fit and extrapolate to the given year
 
 	private:
         std::string pFilePath;
-	    int pYear;
+	    int pYear; // Temporary variable for storing the year of each data line.
 	    int pfirstYear;
-        int pMonth;
-        int pDay;
-        double pTemp;
+        int pMonth; // Temporary variable for storing the month of each data line.
+        int pDay; // Temporary variable for storing the day of each data line.
+        double pTemp; // Temporary variable for storing the temperature of each data line.
 };
 
 #endif
