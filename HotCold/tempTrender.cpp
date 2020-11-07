@@ -4,6 +4,8 @@
 #include "tempTrender.h" 
 #include <bits/stdc++.h>
 #include "TH1.h"
+#include <TStyle.h> 
+#include <TCanvas.h>
 
 using namespace std;
 
@@ -20,20 +22,36 @@ std::string tempTrender::getFilePath() {
     return pFilePath;
 }
 
+void tempTrender::setIndMax(int indMax) {
+    pIndMax = indMax;
+}
+
+int tempTrender::getIndMax() {
+    return pIndMax;
+}
+
+void tempTrender::setIndMin(int indMin) {
+    pIndMin = indMin;
+}
+
+int tempTrender::getIndMin() {
+    return pIndMin;
+}
+
 void tempTrender::setYear(int year) {
-    pYear = year;
+	pYear = year;
 }
 
 int tempTrender::getYear() {
-    return pYear;
+	return pYear;
 }
 
 void tempTrender::setMonth(int month) {
-    pMonth = month;
+	pMonth = month;
 }
 
 int tempTrender::getMonth() {
-    return pMonth;
+	return pMonth;
 }
 
 void tempTrender::setDay(int day) {
@@ -44,6 +62,22 @@ int tempTrender::getDay() {
     return pDay;
 }
 
+void tempTrender::setCountYear(int countYear) {
+	pCountYear = countYear;
+}
+
+int tempTrender::getCountTemp() {
+	return pCountTemp;
+}
+
+void tempTrender::setCountTemp(int countTemp) {
+	pCountTemp = countTemp;
+}
+
+int tempTrender::getCountYear() {
+	return pCountYear;
+}
+
 void tempTrender::setTemp(double temp) {
     pTemp = temp;
 }
@@ -52,143 +86,139 @@ double tempTrender::getTemp() {
     return pTemp;
 }
 
-void tempTrender::setCountYear(int countYear) {
-	pCountYear = countYear;
+void tempTrender::setMax(double max) {
+	pMax = max;
 }
 
-int tempTrender::getCountYear() {
-	return pCountYear;
+double tempTrender::getMax() {
+	return pMax;
 }
 
-void tempTrender::setNumDays(int numDays) {
-	pNumDays = numDays;
+void tempTrender::setMin(double min) {
+	pMin = min;
 }
 	
-int tempTrender::getNumDays() {
-	return pNumDays;
+double tempTrender::getMin() {
+	return pMin;
 }
 	
 
-void tempTrender::hotCold() 
+void tempTrender::hotCold()
 {
-	
-    std::ifstream file(pFilePath);
+	//make sure the file is accessible
+    ifstream file(pFilePath);
 
     if (!file)
-        std::cerr << "hotCold could not read file: " << pFilePath << std::endl;
-
-
-	TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);	
-    TH1D* histHotCold = new TH1D("histHotCold", "Histogram", 366, 1, 366);
+        cerr << "hotCold could not read file: " << pFilePath << std::endl;
 	
 
-    std::vector<int> year, month, day;
-    std::vector<float> temp;
-
+    vector<int> year;
+    vector<float> temp, max, min;
+	
+	//read in file and save year and temperadure in vectors
 	while(file >> pYear >> pMonth >> pDay >> pTemp)
 	{
-		if(pYear == 1722)
-		
-			temp.push_back(pTemp);
-	}
-	for(long unsigned int i = 0; i < temp.size(); i++)
-	{
-		cout << i << " : " << temp[i] << endl;
-	}
-		cout << temp.size() << endl;
-		
-
-	//cout << temp[pTemp] << endl;
-}
-/*
-
 		year.push_back(pYear);
-		
-		for(long unsigned int i = 0; i <)
-		if(pYear == 1722)
-		{
-			temp.push_back(pTemp);
-			cout << temp[pTemp] << endl;
-		}	
-		
-		
+		temp.push_back(pTemp);
 	}
-	for(long unsigned int i = 0; i < temp.size(); i++)
+
+	//close file as we have gathered all data we need.
+	file.close();
+	
+	//hist for hottest/coldest temp of the year, nr of entries	
+    TH1D* histHot = new TH1D("histHot", "Histogram; Temperature; Entries", 150, -40, 40);
+    TH1D* histCold = new TH1D("histCold", "Histogram; Temperature; Entries", 100, -40, 40);
+
+	//assuming here that max temp > 0 and min temp < 0, start count year at 1722, which is the first entry in vector 'year'
+	double pMax = 0;
+	double pMin = 0;
+	pCountYear = 1722;
+	
+	//loop to find max for each year and store it in a vector <max>
+	for(long unsigned int i = 0; i < year.size(); i++) 
 	{
-		cout << "TEMP: " << temp[i+1] << endl;
-	
-	    year.push_back(pYear);
-		month.push_back(pMonth);
-		day.push_back(pDay);
-		temp.push_back(pTemp);
-    }
-    
-    while(year[pYear] == 1722 && month[pMonth] < 2)
-    {
-		for(long unsigned int i = 0; i < 367; i++)
+		if(year[i] == pCountYear)
 		{
-			info.push_back(temp[i]);
-			cout << info[i] << endl;
-		}
-	}
-<<<<<<< HEAD
-}
-	
-
-	for(long unsigned int i = 0; i < temp.size(); i++)
-	{ 
-		cout << temp[i] << "  WHAT " << temp[i+1] << " WHAT " << temp.size() << endl;
-		//give index i to each temperature in temp?
-	}
-	
-=======
->>>>>>> 0aea0f2aabc16aac02c720a32cfce876120e1ec7
-}
-
-	
-
-  
- year.push_back(pYear);
-		month.push_back(pMonth);
-		day.push_back(pDay);
-		temp.push_back(pTemp);
- 
- for(long unsigned int = 0; i < 367; i++)
-				
-	
-
-    for (long unsigned int i = 0; i < year.size();)
-    {
-		cout << "YEAR: " << year.size() << endl;
-		i++;
-	}
-}
-         
-    while (file >> pYear >> pMonth >> pDay >> pTemp) 
-    {
-        while(pCountYear == 1722 && pYear == pCountYear)
-        {
-			for(pMonth = 0; pMonth < 13; pMonth++)
+			if(temp[i] > pMax || pMax == 0)
 			{
-				for(pDay = 0; pDay < 13; pDay++)
-				{
-					//numDays++;
-					//year.push_back(pYear);
-					//cout << pYear << pDay << endl;
-					//for(int i = 0; i < year; i++)
-				}
-				temp.push_back(pTemp);
-				//cout << "Min: " << *min_element(year.begin(), year.end()) << endl;
-				for(int i = 0; i < 367; i++)
-				{
-					std::cout << temp[i] << std::endl;
-				}
-				//Cant really get any loop to work... 
-				I know im doing this way wrong and more complicated than it needs to be
+				pMax = temp[i];
 			}
 		}
-    }
- 
+		else
+		{
+			max.push_back(pMax);
+			pMax = 0;
+			pCountYear++;
+		}
+	}
+	
+	pCountYear = 1722; //set year counter back to 1722
+	
+	//loop to find min for each year and store it in a vector <min>
+	for(long unsigned int i = 0; i < year.size(); i++) 
+	{
+		if(year[i] == pCountYear)
+		{
+			if(temp[i] < pMin || pMin == 0)
+			{
+				pMin = temp[i];
+			}
+		}
+		else
+		{
+			min.push_back(pMin);
+			pMin = 0;
+			pCountYear++;
+		}
+	}
+	
+	//histogram for hottest day for each year
+	TH1D* histHot2 = new TH1D("histHotCold", "Uppsala year by year; Year; Temperature", max.size(), 1722, 2013);
+	
+	//histogram for coldest day for each year
+	TH1D* histCold2 = new TH1D("histHotCold", "Uppsala year by year; Year; Temperature", max.size(), 1722, 2013);
+	
+	TCanvas* c1 = new TCanvas("cl", "Uppsala highs and lows", 900, 600);
+
+	pCountYear = 1722;
+	//loop and fill 4 histograms (max and min has same size = 291)
+	for(long unsigned int n = 0; n < max.size(); n++)
+	{	
+		histHot->Fill(max[n]); 
+		histCold->Fill(min[n]);
+		histHot2->Fill(pCountYear, max[n]);
+		histCold2->Fill(pCountYear, min[n]);
+		pCountYear = pCountYear + 1;
+	}
+
+	histHot2->SetMinimum();
+	histHot2->SetLineColor(2);
+	
+	histCold2->SetMinimum();
+	histCold->SetLineColor(4);
+	histCold2->Draw("same");
+	histHot2->Draw();
 }
+/*	
+ * 	//hist with nr of entries for hottest/coldest days
+	histHot->SetMinimum(0);
+	histHot->SetLineColor(2);
+	histHot->Draw();
+	histCold->SetMinimum(0);
+	histCold->SetLineColor(4);
+	histCold->Draw("same");
+
+ * //this method only works when we have vectors with temperature for each year!
+ * //which was not difficult to do but then you have to but this text inside the loop and thats no good...
+	cout << temp.size() << endl;
+	pIndMax = max_element(temp.begin(), temp.end()) - temp.begin();
+	pIndMin = min_element(temp.begin(), temp.end()) - temp.begin();
+	pMax = *max_element(temp.begin(), temp.end());
+	pMin = *min_element(temp.begin(), temp.end());
+	cout << "max: " << pMax << " index: " << pIndMax << endl;
+	cout << "min: " << pMin << " index: " << pIndMin << endl;
+	cout << year.size() << endl;
+	data.push_back(pMax);	
+
  
 */

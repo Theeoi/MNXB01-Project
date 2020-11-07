@@ -11,23 +11,35 @@ class tempTrender {
         void setFilePath(std::string); 
         std::string getFilePath();
 
-        void setYear(int); 
+        void setIndMax(int); 
+        int getIndMax();
+        
+        void setIndMin(int); 
+        int getIndMin();
+        
+        void setYear(int);
         int getYear();
         
-        void setMonth(int); 
+        void setMonth(int);
         int getMonth(); 
 
         void setDay(int); 
         int getDay();
-
-        void setTemp(double); 
-        double getTemp();
         
         void setCountYear(int);
         int getCountYear();
         
-        void setNumDays(int);
-        int getNumDays();
+        void setCountTemp(int);
+        int getCountTemp();
+
+        void setTemp(double); 
+        double getTemp();
+        
+        void setMax(double);
+        double getMax();
+        
+        void setMin(double);
+        double getMin();
         
 
 	    //void tempOnDay(int monthToCalculate, int dayToCalculate); //Make a histogram of the temperature on this day
@@ -38,13 +50,16 @@ class tempTrender {
 
 	private:
         std::string pFilePath;
-	    int pYear;
+	    int pIndMax;
+        int pIndMin;
+        int pYear;
         int pMonth;
         int pDay;
-        double pTemp;
         int pCountYear;
-        int pNumDays;
-        
+        int pCountTemp;
+        double pTemp;
+        double pMax;
+        double pMin; 
         
         
 };
