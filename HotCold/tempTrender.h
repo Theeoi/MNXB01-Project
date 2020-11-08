@@ -28,9 +28,6 @@ class tempTrender {
         
         void setCountYear(int);
         int getCountYear();
-        
-        void setCountTemp(int);
-        int getCountTemp();
 
         void setTemp(double); 
         double getTemp();
@@ -56,7 +53,6 @@ class tempTrender {
         int pMonth;
         int pDay;
         int pCountYear;
-        int pCountTemp;
         double pTemp;
         double pMax;
         double pMin; 

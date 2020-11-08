@@ -66,14 +66,6 @@ void tempTrender::setCountYear(int countYear) {
 	pCountYear = countYear;
 }
 
-int tempTrender::getCountTemp() {
-	return pCountTemp;
-}
-
-void tempTrender::setCountTemp(int countTemp) {
-	pCountTemp = countTemp;
-}
-
 int tempTrender::getCountYear() {
 	return pCountYear;
 }
@@ -118,7 +110,6 @@ void tempTrender::hotCold()
 	//read in file and save year and temperadure in vectors
 	while(file >> pYear >> pMonth >> pDay >> pTemp)
 	{
-<<<<<<< HEAD
 		year.push_back(pYear);
 		temp.push_back(pTemp);
 	}
@@ -146,36 +137,6 @@ void tempTrender::hotCold()
 			}
 		}
 		else
-=======
-		if(pYear == 1722)
-		{
-			temp.push_back(pTemp);
-		}
-	}
-	for(long unsigned int i = 0; i < temp.size(); i++)
-	{
-		cout << i << " : " << temp[i] << endl;
-	}
-		cout << temp.size() << endl;
-
-	cout << temp.size() << endl;
-	pIndMax = max_element(temp.begin(), temp.end()) - temp.begin(); //creating index for max value 
-	pIndMin = min_element(temp.begin(), temp.end()) - temp.begin(); ////creating index for min value 
-	pMax = *max_element(temp.begin(), temp.end()); //finding max
-	pMin = *min_element(temp.begin(), temp.end()); //finding min
-	cout << "max: " << pMax << " index: " << pIndMax << endl;
-	cout << "min: " << pMin << " index: " << pIndMin << endl;
-}	
-/*
-This loop is storing the max and min values of the vector 'temp' stored with temperature values for one year, the first one.
-Need to add some kind of loop for the years aswell.
-
-
-		year.push_back(pYear);
-		
-		for(long unsigned int i = 0; i <)
-		if(pYear == 1722)
->>>>>>> 08d971553128f8c068a17b4c19845e11a14b5fea
 		{
 			max.push_back(pMax);
 			pMax = 0;
@@ -183,7 +144,6 @@ Need to add some kind of loop for the years aswell.
 		}
 	}
 	
-<<<<<<< HEAD
 	pCountYear = 1722; //set year counter back to 1722
 	
 	//loop to find min for each year and store it in a vector <min>
@@ -222,8 +182,6 @@ Need to add some kind of loop for the years aswell.
 		histCold2->Fill(pCountYear, min[n]);
 		pCountYear = pCountYear + 1;
 	}
-=======
->>>>>>> 08d971553128f8c068a17b4c19845e11a14b5fea
 
 	histHot2->SetMinimum();
 	histHot2->SetLineColor(2);
@@ -243,7 +201,7 @@ Need to add some kind of loop for the years aswell.
 	histCold->Draw("same");
 
  * //this method only works when we have vectors with temperature for each year!
- * //which was not difficult to do but then you have to but this text inside the loop and thats no good...
+ * // but then you have to have this text inside the loop and thats no good...
 	cout << temp.size() << endl;
 	pIndMax = max_element(temp.begin(), temp.end()) - temp.begin();
 	pIndMin = min_element(temp.begin(), temp.end()) - temp.begin();

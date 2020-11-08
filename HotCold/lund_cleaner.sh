@@ -5,7 +5,7 @@ usage(){
 	echo -e "  To call this script please use"
 	echo -e "   $0 <path>"
 	echo -e "  Examples:"
-        echo -e "   $0 uppsala_tm_1722-2013.dat"
+        echo -e "   $0 ../datasets/rawdata_smhi-opendata_Lund.csv"
 	echo "----"
 }
 
@@ -28,17 +28,10 @@ if [[ $? != 0 ]]; then
    exit 1
 fi
 
-#currently set to clean the data for uppsala, with spaces as a seperator
-#cut -d' ' -f1-4 original_$DATAFILE | 
+cut -d' ' -f1-3 original_$DATAFILE | cut -d' ' -f2 --complement | sed 's/-/ /g' | sed 's/,,/ /g' > clean_$DATAFILE
+awk '{ if ($2 == 04) print $1, $2, $3, $4}'  clean_$DATAFILE | awk '{ if ($3 == 30) print $1, $2, $3, $4}' | sed 's/ /,/g' > VALBORG_$DATAFILE
 
-sed 's/      /     /g' original_$DATAFILE | sed 's/     /    /g' | sed 's/    /   /g' | sed 's/   /  /g' | sed 's/  / /g' > clean_$DATAFILE
 
-awk '{if ($6 == 1) print $1, $2, $3, $4}' clean_$DATAFILE > hotcold_uppsala.csv
-#| awk '{ if ($2 == 04) print $1, $2, $3, $4}' | awk '{ if ($3 == 30) print $1, $2, $3, $4}' | sed 's/ /,/g' > VALBORG_$DATAFILE
-
-# clean2_$DATAFILE > valborg_uppsala.csv
-
-#cut -d',' -f1-4 
 #cut -d' ' -f1-1 clean_$DATAFILE | sed 's/-//g' > date_$DATAFILE
 #cut -d' ' -f3- clean_$DATAFILE > temp_$DATAFILE
 
