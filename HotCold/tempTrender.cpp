@@ -119,7 +119,7 @@ void tempTrender::hotCold()
 	
 	//hist for hottest/coldest temp of the year, nr of entries	
     TH1D* histHot = new TH1D("histHot", "Histogram; Temperature; Entries", 150, -40, 40);
-    TH1D* histCold = new TH1D("histCold", "Histogram; Temperature; Entries", 100, -40, 40);
+    TH1D* histCold = new TH1D("histCold", "Histogram; Temperature; Entries", 150, -40, 40);
 
 	//assuming here that max temp > 0 and min temp < 0, start count year at 1722, which is the first entry in vector 'year'
 	double pMax = 0;
@@ -165,31 +165,38 @@ void tempTrender::hotCold()
 	}
 	
 	//histogram for hottest day for each year
-	TH1D* histHot2 = new TH1D("histHotCold", "Uppsala year by year; Year; Temperature", max.size(), 1722, 2013);
+	TH1D* histHot2 = new TH1D("histHotCold", "Uppsala year by year; Year; Temperature [C]", max.size(), 1722, 2013);
 	
 	//histogram for coldest day for each year
-	TH1D* histCold2 = new TH1D("histHotCold", "Uppsala year by year; Year; Temperature", max.size(), 1722, 2013);
+	TH1D* histCold2 = new TH1D("histHotCold", "Uppsala year by year; Year; Temperature [C]", max.size(), 1722, 2013);
 	
-	TCanvas* c1 = new TCanvas("cl", "Uppsala highs and lows", 900, 600);
+	//TCanvas* c1 = new TCanvas("cl", "Uppsala highs and lows", 900, 600);
 
 	pCountYear = 1722;
 	//loop and fill 4 histograms (max and min has same size = 291)
+	//not all years have data! there are some years for when the data 
+	//was taken from other places than uppsala, those places where removed in the cleaning process. 
 	for(long unsigned int n = 0; n < max.size(); n++)
 	{	
+		cout << pCountYear << " : MAX: " << max[n] << " MIN: " << min[n] << endl;
 		histHot->Fill(max[n]); 
 		histCold->Fill(min[n]);
 		histHot2->Fill(pCountYear, max[n]);
 		histCold2->Fill(pCountYear, min[n]);
 		pCountYear = pCountYear + 1;
 	}
-
-	histHot2->SetMinimum();
+	//fill the histograms with the right colour and draw them together
+	histHot2->SetMinimum(-35);
+	histHot2->SetMaximum(35);
 	histHot2->SetLineColor(2);
+	histHot2->SetFillColor(2);
 	
-	histCold2->SetMinimum();
-	histCold->SetLineColor(4);
-	histCold2->Draw("same");
-	histHot2->Draw();
+	histCold2->SetMinimum(-35);
+	histCold2->SetLineColor(4);
+	histCold2->SetFillColor(4);
+	
+	histHot2->Draw("hist b");
+	histCold2->Draw("hist same b");
 }
 /*	
  * 	//hist with nr of entries for hottest/coldest days
