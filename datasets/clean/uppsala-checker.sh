@@ -31,8 +31,8 @@ DATALOC=$(dirname "$DATAINPUT")
 
 NUMLINES=$( wc -l $DATAINPUT | awk -F' ' '{print $1}' )
 
-## Our data is in the fifth column
-DATA=$( cat $DATAINPUT | awk -F' ' '{print $5}' ) 
+## Our data is in the fourth column
+DATA=$( cat $DATAINPUT | awk -F' ' '{print $4}' ) 
 
 echo "Checking if all ${NUMLINES} lines of data are numbers."
 for (( j = 1; j < $NUMLINES; j++ )); do
