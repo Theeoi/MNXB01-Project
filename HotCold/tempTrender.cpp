@@ -197,6 +197,9 @@ void tempTrender::hotCold()
 		}
 		else
 		{
+}
+	
+
 			max.push_back(pMax);
 			pMax = 0;
 			pCountYear++;
@@ -221,7 +224,8 @@ void tempTrender::hotCold()
 			pMin = 0;
 			pCountYear++;
 		}
-	}
+
+  }
 	
 	//histogram for hottest day for each year
 	TH1D* histHot2 = new TH1D("histHotCold", "Uppsala year by year; Year; Temperature [C]", max.size(), 1722, 2013);
@@ -299,6 +303,7 @@ void tempTrender::hotCold()
 	cout << "min: " << pMin << " index: " << pIndMin << endl;
 	cout << year.size() << endl;
 	data.push_back(pMax);	
+
 
  
 */

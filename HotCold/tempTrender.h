@@ -34,6 +34,7 @@ class tempTrender {
         
         void setMax(double);
         double getMax();
+
         
         void setMin(double);
         double getMin();
@@ -43,6 +44,7 @@ class tempTrender {
         
         void setTotMin(double);
         double getTotMin();
+
         
         void setAvMax(double);
         double getAvMax();
@@ -84,6 +86,7 @@ class tempTrender {
         double pTempDiff;
         double pTotDiff;
         double pAvDiff;
+
         
         
 };
