@@ -178,7 +178,6 @@ void tempTrender::hotCold()
 	//was taken from other places than uppsala, those places where removed in the cleaning process. 
 	for(long unsigned int n = 0; n < max.size(); n++)
 	{	
-		cout << pCountYear << " : MAX: " << max[n] << " MIN: " << min[n] << endl;
 		histHot->Fill(max[n]); 
 		histCold->Fill(min[n]);
 		histHot2->Fill(pCountYear, max[n]);
